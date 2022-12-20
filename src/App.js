@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import AppProvider from "./AppContext/Provider";
+
+import "./index.css";
+import Singup from "./RouteComponents/Singup";
+import Login from "./RouteComponents/Login";
+import Today from "./RouteComponents/Today";
+import Habits from "./RouteComponents/Habits";
+import Historic from "./RouteComponents/Historic";
+import { useContext } from "react";
+import AppContext from "./AppContext/Context";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/cadastro" element={<Singup />} />
+            <Route path="/hoje" element={<Today />} />
+            <Route path="/habitos" element={<Habits />} />
+            <Route path="/historico" element={<Historic />} />
+          </Routes>
+        </Router>
+      </AppProvider>
     </div>
   );
 }

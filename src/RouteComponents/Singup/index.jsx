@@ -36,15 +36,15 @@ function Singup() {
       );
       if (response.status === 201) {
         onOpenModal();
-      } else if (response.status === 409) {
-        console.log("oi");
-        onOpenModalFailure();
-      } else {
-        alert("Não foi possível cadastrar seu usuário, verifique os dados");
       }
       setEnable(false);
     } catch (err) {
-      console.log(err);
+      if (err.response.status === 409) {
+        onOpenModalFailure();
+      } else {
+        alert(err.response.data.message);
+      }
+      setEnable(false);
     }
   }
 

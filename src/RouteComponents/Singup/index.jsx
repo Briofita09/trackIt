@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 function Singup() {
   const [open, setOpen] = useState(false);
+  const [openFailure, setOpenFailure] = useState(false);
   const [enable, setEnable] = useState(!true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,6 +18,8 @@ function Singup() {
   const [image, setImage] = useState("");
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+  const onOpenModalFailure = () => setOpenFailure(true);
+  const onCloseModalFailure = () => setOpenFailure(false);
   const user = {
     email,
     password,
@@ -33,6 +36,10 @@ function Singup() {
       );
       if (response.status === 201) {
         onOpenModal();
+      } else if (response.status === 409) {
+        onOpenModalFailure();
+      } else {
+        alert("Não foi possível cadastrar seu usuário, verifique os dados");
       }
       setEnable(false);
     } catch (err) {
@@ -74,6 +81,12 @@ function Singup() {
           {enable ? <Loading /> : "Cadastrar"}
         </Button>
       </Form>
+      <Modal open={openFailure} onClose={onCloseModalFailure} center>
+        <p>
+          <br />
+          Usuário já cadastrado
+        </p>
+      </Modal>
       <Modal open={open} onClose={onCloseModal} center>
         <p>
           <br />
